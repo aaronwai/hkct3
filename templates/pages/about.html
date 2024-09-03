@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}  {% block content %} {% load static %}
 <section id="showcase-inner" class="py-5 text-white">
   <div class="container">
     <div class="row text-center">
@@ -19,7 +19,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="index.html"> <i class="fas fa-home"></i> Home</a>
+          <a href={% url "index" %}> <i class="fas fa-home"></i> Home</a>
         </li>
         <li class="breadcrumb-item active">About</li>
       </ol>
@@ -36,7 +36,7 @@
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt,
           pariatur!
         </p>
-        <img src="assets/img/about.jpg" alt="" />
+        <img src={% static "img/about.jpg" %} alt="" />
         <p class="mt-4">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
           esse officia repudiandae ad saepe ex, amet neque quod accusamus rem
@@ -47,6 +47,7 @@
       </div>
       <div class="col-md-4">
         <div class="card">
+          {% comment %} fix realtor img {% endcomment %}
           <img
             class="card-img-top"
             src="assets/img/realtors/kyle.jpg"
@@ -74,6 +75,7 @@
     aperiam, unde aliquid at similique!
   </h4>
   <hr />
+  {% comment %} fix listings {% endcomment %}
   <a href="listings.html" class="btn btn-secondary text-white btn-lg"
     >View Our Featured Listings</a
   >
@@ -85,6 +87,7 @@
     <h2 class="text-center">Our Team</h2>
     <div class="row text-center">
       <div class="col-md-4">
+        {% comment %} fix realtor img {% endcomment %}
         <img
           src="assets/img/realtors/kyle.jpg"
           alt=""
@@ -100,6 +103,7 @@
       </div>
 
       <div class="col-md-4">
+        {% comment %} fix realtor img {% endcomment %}
         <img
           src="assets/img/realtors/mark.jpg"
           alt=""
@@ -113,6 +117,7 @@
       </div>
 
       <div class="col-md-4">
+        {% comment %} fix realtor img {% endcomment %}
         <img
           src="assets/img/realtors/jenny.jpg"
           alt=""
