@@ -29,10 +29,12 @@
        {% endif %}>
           <a class="nav-link" href={% url "about" %}>About</a>
         </li>
-        {% comment %} update the css class for active link {% endcomment %}
-        <li class="nav-item mr-3">
-          {% comment %} fix listings.html {% endcomment %}
-          <a class="nav-link" href="listings.html">Featured Listings</a>
+        <li {% if 'listings' in request.path %} 
+        class="nav-item active mr-3"
+        {% else %}
+       class="nav-item mr-3" 
+       {% endif %}>
+          <a class="nav-link" href={% url "listings" %}>Featured Listings</a>
         </li>
       </ul>
 
