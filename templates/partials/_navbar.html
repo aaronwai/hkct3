@@ -37,25 +37,46 @@
           <a class="nav-link" href={% url "listings" %}>Featured Listings</a>
         </li>
       </ul>
-
       <ul class="navbar-nav ml-auto">
-        {% comment %} update register active link {% endcomment %}
-        <li class="nav-item mr-3">
-          {% comment %} fix register.html {% endcomment %}
-          <a class="nav-link" href="register.html">
+        <!-- if login then show dashboard and logout link -->
+        {% if user.is_authenticated %}
+        <!--dashboard link-->
+        <li {% if 'dashboard' in request.path %} class='nav-item mr-3 active' 
+        {% else %} class='nav-item mr-3' {% endif %}>
+        <a class="nav-link" href={% url 'dashboard' %} >Welcome {{user.username}} (dashboard)</a>
+        </li> 
+        <!--logout link -->
+        <li class='nav-item mr-3'>
+          <a href="javascript:{document.getElementById('logout').submit()}" class='nav-link'>
+          <i class='fas fa-sign-out-alt'></i> Logout   
+          </a>
+          <form action="{% url 'logout' %}" method="POST" id="logout">
+            {% csrf_token %}
+            <input type='hidden'/>
+          </form>
+        </li>   
+        {% else %}
+        <!-- this is register li-->
+        <li  {% if 'register' in request.path %}
+         class="nav-item mr-3 active"
+          {% else %}
+       class="nav-item mr-3" {% endif %} >
+          <a class="nav-link" href={% url "register" %}>
             <i class="fas fa-user-plus"></i> Register</a
           >
         </li>
-        {% comment %} update login active link {% endcomment %}
-        <li class="nav-item mr-3">
-          {% comment %} fix login.html {% endcomment %}
-          <a class="nav-link" href="login.html">
+      <!-- this is login link -->
+        <li   {% if 'login' in request.path %}
+       class="nav-item mr-3 active" 
+        {% else %}
+         class="nav-item mr-3" {% endif %}>
+          <a class="nav-link" href={% url "login" %}>
             <i class="fas fa-sign-in-alt"></i>
-
             Login</a
           >
         </li>
-      </ul>
+      {% endif %}
+        </ul>
     </div>
   </div>
 </nav>
