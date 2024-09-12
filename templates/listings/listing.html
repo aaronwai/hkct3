@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% load humanize %} {% block content %}
+{% extends 'base.html' %} {% load humanize %} 
+<!-- tab title-->
+{% block title %} | {{listing.title}} {% endblock %}
+{% block content %}
 <section id="showcase-inner" class="py-5 text-white">
   <div class="container">
     <div class="row text-center">
@@ -28,7 +31,7 @@
     </nav>
   </div>
 </section>
-
+{% include 'partials/_alert.html' %}
 <!-- Listing -->
 <section id="listing" class="py-4">
   <div class="container">
@@ -157,7 +160,6 @@
                 <span class="float-right">{{listing.sqft | intcomma}}</span>
               </li>
               <li class="list-group-item text-secondary">
-                {% comment %} update estate {% endcomment %}
                 <i class="fas fa-square"></i> Estate Size:
                 <span class="float-right">{{listing.estate_size}} </span>
               </li>
@@ -214,24 +216,40 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="{% url 'contact' %}" method="POST">
+          {% csrf_token %}
+          {% if user.is_authenticated %}
+          <input type='hidden' name='user_id' value="{{user.id}}" />
+          {% else %}
+          <input type='hidden' name='user_id' value="0" />
+          {% endif %}
+          <!--add realtor email-->
+          <input type='hidden' name="realtor_email" value="{{listing.realtor.email}}"/>
+          <input type='hidden' name="listing_id" value="{{listing.id}}" />
           <div class="form-group">
             <label for="property_name" class="col-form-label">Property:</label>
             <input
               type="text"
               name="listing"
               class="form-control"
-              value="45 Prince Street"
-              disabled
+              value="{{listing.title}}"
             />
           </div>
           <div class="form-group">
             <label for="name" class="col-form-label">Name:</label>
-            <input type="text" name="name" class="form-control" required />
+            <input type="text" name="name" class="form-control" 
+            {% if user.is_authenticated %}
+            value="{{user.first_name}} {{user.last_name}}"
+            {% endif %}
+            required />
           </div>
           <div class="form-group">
             <label for="email" class="col-form-label">Email:</label>
-            <input type="email" name="email" class="form-control" required />
+            <input type="email" name="email" class="form-control" 
+           {% if user.is_authenticated %}
+            value="{{user.email}}"
+            {% endif %} 
+            required />
           </div>
           <div class="form-group">
             <label for="phone" class="col-form-label">Phone:</label>
